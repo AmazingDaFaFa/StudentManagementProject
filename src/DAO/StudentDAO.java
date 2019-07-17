@@ -1,6 +1,5 @@
 package DAO;
 
-import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class StudentDAO extends BaseDAO{
 		}
 		try {
 			// check
-			if (queryBySno(stu.getID()) == 0) {
+			if (queryByID(stu.getID()) == 0) {
 				return result;
 			}
 			// update
@@ -70,7 +69,7 @@ public class StudentDAO extends BaseDAO{
 		}
 		try {
 			// check
-			if (queryBySno(stu.getID()) == 1) {
+			if (queryByID(stu.getID()) == 1) {
 				return result;
 			}
 			// insert
@@ -178,7 +177,7 @@ public class StudentDAO extends BaseDAO{
 	}
 
 	// query by sno
-	private int queryBySno(int sno) throws SQLException {
+	private int queryByID(int sno) throws SQLException {
 		int result = 0;
 		if (sno == 0) {
 			return result;
@@ -193,21 +192,23 @@ public class StudentDAO extends BaseDAO{
 	}
 
 	
-
-	public void queryAllScore() {
+	public String[][] queryAllScore(Student stu) {
 		//根据this.id查询SC表，返回保存了所有课程CID、课程名称Cname、成绩信息Cscore的String[][];
 	}
 	
-	public void queryScore(int CID) {
+	public String[][] queryScore(Student stu, int CID) {
 		//根据this.id和cid查询SC表，返回保存了指定课程的成绩信息的String[][];
 	}
 	
-	public void queryCourse() {
+	public String[][] queryCourse(Student stu) {
 		//根据this.id查询SC表，返回保存了所有课程名称Cname和Cid的String[][]
 	}
 	
-	public void querySelfInfo() {
+	public String[] querySelfInfo(Student stu) {
 		//根据this.id查询
 	}
 	
+	public void updatePswd(String pswd) {
+		//
+	}
 }
