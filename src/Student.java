@@ -1,4 +1,5 @@
 
-public class Student {
+// 学生Model
+public class Student extends User{
 
 }
