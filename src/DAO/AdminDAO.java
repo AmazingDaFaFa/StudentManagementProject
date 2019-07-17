@@ -1,6 +1,6 @@
 package DAO;
 
-public class TeacherDAO extends BaseDAO{
+public class AdminDAO extends BaseDAO{
 	private static AdminDAO ad = null;
 
 	public static synchronized AdminDAO getInstance() {
