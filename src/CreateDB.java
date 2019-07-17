@@ -3,7 +3,7 @@ import java.sql.*;
 
 public class CreateDB {
 
-	public static void main(String[] args) throws Exception {
+	public static void createTable() throws Exception {
 		String sql[]=new String[5];
 		
 		
@@ -28,5 +28,9 @@ public class CreateDB {
 	    	System.out.println("连接Mysql server 失败!");
 	    	System.out.println(e.toString());
 	    }
-  }
+	}
+	
+	public boolean insertData() {
+		return false;
+	}
 }
