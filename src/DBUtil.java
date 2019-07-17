@@ -1,7 +1,7 @@
 import java.sql.*;
 
 
-public class CreateDB {
+public class DBUtil {
 
 	public static void createTable() throws Exception {
 		String sql[]=new String[5];
