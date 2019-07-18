@@ -33,8 +33,10 @@ public abstract class BaseDAO {
 		if (password.length() == 0) {
 			return result;
 		}
+		String useDB = "USE studentmanagementdemo;";
 		String sql = "select usertype from User where UserID=? and Userpassword=?";
 		Object[] param = { userID, password };
+		rs = db.executeQuery(useDB);
 		rs = db.executeQuery(sql, param);
 		try {
 			if (rs.next()) {
