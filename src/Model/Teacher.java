@@ -5,7 +5,8 @@ public class Teacher {
 	int id;
 	String name;
 	String password;
-
+	String sex;
+	
 	public void setID(int id) {
 		this.id = id;
 	}
@@ -20,5 +21,18 @@ public class Teacher {
 
 	public String getName() {
 		return name;
+	}
+	
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
+	public String getSex() {
+		return sex;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getID() + '\t' + this.getName() + '\t' + this.getSex();
 	}
 }

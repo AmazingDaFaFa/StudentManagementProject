@@ -5,14 +5,18 @@ import java.sql.SQLException;
 
 import DB.DBUtil;
 
-enum DAO{
-	AdminDAO, StudentDAO, TeacherDAO
-};
+//enum DAO{
+// AdminDAO, StudentDAO, TeacherDAO
+//};
 
 public abstract class BaseDAO {
 	protected final DBUtil db = DBUtil.getDBUtil();
 	protected ResultSet rs;
 	private static BaseDAO baseDAO;
+
+	private static final int adminDAO = 2;
+	private static final int teacherDAO = 1;
+	private static final int studentDAO = 0;
 
 	public BaseDAO() {
 		init();
@@ -24,19 +28,40 @@ public abstract class BaseDAO {
 
 	// protected abstract void buildAbilityDAO();
 
-	public static synchronized BaseDAO getAbilityDAO(DAO dao) {
+	public int queryForLogin(String username, String password) {
+		int result = -1;
+		if (username.length() == 0 || password.length() == 0) {
+			return result;
+		}
+		String sql = "select usertype from User where username=? and password=?";
+		String[] param = { username, password };
+		rs = db.executeQuery(sql, param);
+		try {
+			if (rs.next()) {
+				result = Integer.parseInt(rs.getString("UserType"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			destroy();
+		}
+		return result;
+	}
+
+	public static synchronized BaseDAO getAbilityDAO(int dao) {
+
 		switch (dao) {
-		case AdminDAO:
+		case adminDAO:
 			if (baseDAO == null || baseDAO.getClass() != AdminDAO.class) {
 				baseDAO = AdminDAO.getInstance();
 			}
 			break;
-		case StudentDAO:
+		case studentDAO:
 			if (baseDAO == null || baseDAO.getClass() != StudentDAO.class) {
 				baseDAO = StudentDAO.getInstance();
 			}
 			break;
-		case TeacherDAO:
+		case teacherDAO:
 			if (baseDAO == null || baseDAO.getClass() != TeacherDAO.class) {
 				baseDAO = TeacherDAO.getInstance();
 			}

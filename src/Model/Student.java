@@ -12,9 +12,7 @@ public class Student{
 	String tel;
 	String email;
 	
-	public Student() {
-		
-	}
+	public Student() {	}
 	
 	public void setID(int id) {
 		this.id = id;
@@ -78,6 +76,12 @@ public class Student{
 	
 	public String getEmail() {
 		return email;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getID() + '\t' + this.getName() + '\t' + this.getSex() + '\t' + this.getGrade() + '\t' + this.getMajor() + '\t' + 
+				this.getHometown() + '\t' + this.getTel() + '\t' + this.getEmail();
 	}
 	
 }

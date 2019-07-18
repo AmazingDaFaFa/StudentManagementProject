@@ -1,13 +1,17 @@
 package DAO;
 
+import java.awt.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Model.Student;
+import com.mysql.cj.result.Row;
 
-public class StudentDAO extends BaseDAO{
-	
+import Model.Student;
+import Model.StudentCourse;
+
+public class StudentDAO extends BaseDAO {
+
 	private final int fieldNum = 9;
 	private final int showNum = 15;
 	private static StudentDAO sd = null;
@@ -32,7 +36,8 @@ public class StudentDAO extends BaseDAO{
 			}
 			// update
 			String sql = "update student set Ssex=?,Sgrade=?,Smajor=?,Shometown=?,Stel=?,Semail=? where Sname=? and Sid=?";
-			Object[] param = { stu.getSex(), stu.getGrade(), stu.getMajor(), stu.getHometown(),stu.getEmail(), stu.getTel(),stu.getName(), stu.getID() };
+			Object[] param = { stu.getSex(), stu.getGrade(), stu.getMajor(), stu.getHometown(), stu.getEmail(),
+					stu.getTel(), stu.getName(), stu.getID() };
 			int rowCount = db.executeUpdate(sql, param);
 			if (rowCount == 1) {
 				result = true;
@@ -74,7 +79,8 @@ public class StudentDAO extends BaseDAO{
 			}
 			// insert
 			String sql = "insert into student(SID,Sname,Ssex,Sgrade,Smajor,Shometown,Stel,Semail) values(?,?,?,?,?,?,?,?)";
-			Object[] param = { stu.getID(), stu.getName(), stu.getSex(), stu.getGrade(), stu.getMajor(), stu.getHometown(), stu.getTel(), stu.getEmail() };
+			Object[] param = { stu.getID(), stu.getName(), stu.getSex(), stu.getGrade(), stu.getMajor(),
+					stu.getHometown(), stu.getTel(), stu.getEmail() };
 			if (db.executeUpdate(sql, param) == 1) {
 				result = true;
 			}
@@ -176,6 +182,23 @@ public class StudentDAO extends BaseDAO{
 		result[j][7] = stu.getTel();
 	}
 
+	private void buildListSC(ResultSet rs, ArrayList<StudentCourse> list, int i) throws SQLException {
+		StudentCourse studentCourse = new StudentCourse();
+		studentCourse.setSid(rs.getInt("SID"));
+		studentCourse.setCid(rs.getInt("CID"));
+		studentCourse.setCname(rs.getString("Cname"));
+		studentCourse.setCscore(rs.getString("Cscore"));
+		list.add(studentCourse);
+	}
+
+	private void buildResultSC(String[][] result, ArrayList<StudentCourse> scArrayList, int j) {
+		StudentCourse studentCourse = scArrayList.get(j);
+		result[j][0] = String.valueOf(studentCourse.getSid());
+		result[j][1] = String.valueOf(studentCourse.getCid());
+		result[j][2] = studentCourse.getCname();
+		result[j][3] = studentCourse.getCscore();
+	}
+
 	// query by sno
 	private int queryByID(int sno) throws SQLException {
 		int result = 0;
@@ -191,24 +214,140 @@ public class StudentDAO extends BaseDAO{
 		return result;
 	}
 
-	
 	public String[][] queryAllScore(Student stu) {
-		//根据this.id查询SC表，返回保存了所有课程CID、课程名称Cname、成绩信息Cscore的String[][];
+		// 根据this.id查询SC表，返回保存了所有课程CID、课程名称Cname、成绩信息Cscore的String[][];
+		String[][] result = null;
+		if (stu == null) {
+			return result; // if student don't exist,return null
+		}
+		ArrayList<StudentCourse> stus = new ArrayList<StudentCourse>();
+		int i = 0;
+		String sql = "select * from StudentCourse where SID=?";
+		Object[] param = { stu.getID() };
+		rs = db.executeQuery(sql, param);
+		try {
+			while (rs.next()) {
+				buildListSC(rs, stus, i);
+				i++;
+			}
+			if (stus.size() > 0) {
+				result = new String[stus.size()][fieldNum];
+				for (int j = 0; j < stus.size(); j++) {
+					buildResultSC(result, stus, j);
+				}
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			destroy();
+		}
+		return result;
 	}
-	
+
 	public String[][] queryScore(Student stu, int CID) {
-		//根据this.id和cid查询SC表，返回保存了指定课程的成绩信息的String[][];
+		// 根据this.id和cid查询SC表，返回保存了指定课程的成绩信息的String[][];
+		String[][] result = null;
+		if (stu == null) {
+			return result;
+		}
+		ArrayList<StudentCourse> stus = new ArrayList<StudentCourse>();
+		int i = 0;
+		String sql = "select Cscore from StudentCourse where SID=? and CID=?";
+		Object[] param = { stu.getID(), CID };
+		rs = db.executeQuery(sql, param);
+		try {
+			while (rs.next()) {
+				buildListSC(rs, stus, i);
+				i++;
+			}
+			if (stus.size() > 0) {
+				result = new String[stus.size()][fieldNum];
+				for (int j = 0; j < stus.size(); j++) {
+					buildResultSC(result, stus, j);
+				}
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			destroy();
+		}
+		return result;
+
 	}
-	
+
 	public String[][] queryCourse(Student stu) {
-		//根据this.id查询SC表，返回保存了所有课程名称Cname和Cid的String[][]
+		// 根据this.id查询SC表，返回保存了所有课程名称Cname和Cid的String[][]
+		String[][] result = null;
+		if (stu == null) {
+			return result;
+		}
+		ArrayList<StudentCourse> stus = new ArrayList<StudentCourse>();
+		int i = 0;
+		String sql = "select Cname,CID from StudentCourse where SID=?";
+		Object[] param = { stu.getID() };
+		rs = db.executeQuery(sql, param);
+		try {
+			while (rs.next()) {
+				buildListSC(rs, stus, i);
+				i++;
+			}
+			if (stus.size() > 0) {
+				result = new String[stus.size()][fieldNum];
+				for (int j = 0; j < stus.size(); j++) {
+					buildResultSC(result, stus, j);
+				}
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			destroy();
+		}
+		return result;
 	}
-	
-	public String[] querySelfInfo(Student stu) {
-		//根据this.id查询
+
+	public String[][] querySelfInfo(Student stu) {
+		// 根据this.id查询
+		String[][] result = null;
+		if (stu == null) {
+			return result;
+		}
+		ArrayList<Student> stus = new ArrayList<Student>();
+		int i = 0;
+		String sql = "select * from Student where SID=?";
+		Object[] param = { stu.getID() };
+		rs = db.executeQuery(sql, param);
+		try {
+			while (rs.next()) {
+				buildList(rs, stus, i);
+				i++;
+			}
+			if (stus.size() > 0) {
+				result = new String[stus.size()][fieldNum];
+				for (int j = 0; j < stus.size(); j++) {
+					buildResult(result, stus, j);
+				}
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			destroy();
+		}
+		return result;
 	}
-	
-	public void updatePswd(String pswd) {
-		//
+
+	public boolean updatePswd(Student stu, String pswd) {
+		// 修改密码
+		boolean result = false;
+		try {
+			String sql = "update User set userPassword=? where userID=?";
+			Object[] param = { pswd, stu.getID() };
+			int Rowcount = db.executeUpdate(sql, param);
+			if (Rowcount == 1) {
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
