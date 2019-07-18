@@ -206,11 +206,10 @@ public class TeacherDAO extends BaseDAO{
 	
 	public String[][] queryGrade(Teacher teacher, int cid) {
 		String[][] result = null;
-		
 		int i = 0;
 		ArrayList<StudentCourse> TCs = new ArrayList<StudentCourse>();
-		String sql = "SELECT * FROM studentmanagementdemo.TeacherCourse WHERE Tid=?";
-		Object[] param = { teacher.getID() };
+		String sql = "SELECT * FROM studentmanagementdemo.StudentCourse WHERE CID=?";
+		Object[] param = { cid };
 			
 		rs = db.executeQuery(sql, param);
 		try {
@@ -268,6 +267,26 @@ public class TeacherDAO extends BaseDAO{
 		result[j][0] = String.valueOf(sc.getSid());
 		result[j][1] = String.valueOf(sc.getCid());
 		result[j][2] = sc.getCname();
+		result[j][3] = sc.getCscore();
+	}
+	
+	public Teacher getTeacherByID(Teacher teacher) {
+		
+		if (teacher.getID() == 0) {
+			return teacher;
+		}
+		String checkSql = "select * from studentmanagementdemo.teacher where TID=?";
+		Object[] checkParam = { teacher.getID() };
+		rs = db.executeQuery(checkSql, checkParam);
+		try {
+			if (rs.next()) {
+				teacher.setName(rs.getString("Tname"));
+			} 
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return teacher;
 	}
 	
 }

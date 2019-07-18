@@ -202,7 +202,7 @@ public class StudentDAO extends BaseDAO {
 		if (sno == 0) {
 			return result;
 		}
-		String checkSql = "select * from studentmanagementdemo.student where sno=?";
+		String checkSql = "select * from studentmanagementdemo.student where SID=?";
 		Object[] checkParam = { sno };
 		rs = db.executeQuery(checkSql, checkParam);
 		if (rs.next()) {
@@ -346,5 +346,18 @@ public class StudentDAO extends BaseDAO {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public Student getStudentByID(Student student) {
+		try {
+			if(queryByID(student.getID())  == 1) {
+				String[] data = querySelfInfo(student)[0];
+				student.setName(data[1]);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return student;
 	}
 }

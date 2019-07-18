@@ -84,6 +84,7 @@ public class Login {
 			public void actionPerformed(ActionEvent e) {
 				String pswd = new String(passwordField.getPassword());
 				int identity = bDAO.queryForLogin(Integer.parseInt(textField_1.getText()), pswd);
+				BaseDAO UserDAO = bDAO.getAbilityDAO(identity);
 				switch(identity) {
 				case 0:
 					Student student=new Student();

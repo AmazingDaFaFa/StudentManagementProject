@@ -256,6 +256,7 @@ public class AdminDAO extends BaseDAO {
 		result[j][0] = String.valueOf(sc.getSid());
 		result[j][1] = String.valueOf(sc.getCid());
 		result[j][2] = sc.getCname();
+		result[j][3] = sc.getCscore();
 	}
 
 	private int queryByID(int sno) throws SQLException {
@@ -263,7 +264,7 @@ public class AdminDAO extends BaseDAO {
 		if (sno == 0) {
 			return result;
 		}
-		String checkSql = "select * from studentmanagementdemo.student where sno=?";
+		String checkSql = "select * from studentmanagementdemo.student where SID=?";
 		Object[] checkParam = { sno };
 		rs = db.executeQuery(checkSql, checkParam);
 		if (rs.next()) {
@@ -271,5 +272,23 @@ public class AdminDAO extends BaseDAO {
 		}
 		return result;
 	}
-
+	
+public AdminTeacher getTeacherByID(AdminTeacher teacher) {
+		
+		if (teacher.getID() == 0) {
+			return teacher;
+		}
+		String checkSql = "select * from studentmanagementdemo.teacher where TID=?";
+		Object[] checkParam = { teacher.getID() };
+		rs = db.executeQuery(checkSql, checkParam);
+		try {
+			if (rs.next()) {
+				teacher.setName(rs.getString("Tname"));
+			} 
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return teacher;
+	}
 }
