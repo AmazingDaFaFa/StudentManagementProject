@@ -34,9 +34,9 @@ public abstract class BaseDAO {
 			return result;
 		}
 		String useDB = "USE studentmanagementdemo;";
+		rs = db.executeQuery(useDB);
 		String sql = "select usertype from User where UserID=? and Userpassword=?";
 		Object[] param = { userID, password };
-		rs = db.executeQuery(useDB);
 		rs = db.executeQuery(sql, param);
 		try {
 			if (rs.next()) {

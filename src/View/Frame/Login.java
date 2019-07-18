@@ -1,9 +1,10 @@
-package View.JFrame;
+package View.Frame;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import DAO.AdminDAO;
@@ -13,28 +14,28 @@ import DAO.TeacherDAO;
 import Model.AdminTeacher;
 import Model.Student;
 import Model.Teacher;
+import run.MainApp;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Login extends BaseDAO{
-
+public class Login {
 	private JFrame frame;
 	private JPasswordField passwordField;
 	private JTextField textField_1;
-
+	private BaseDAO bDAO;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Login window = new Login();
 					window.frame.setVisible(true);
-					window.frame.setTitle("��½");
+					window.frame.setTitle("请登录");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,6 +47,8 @@ public class Login extends BaseDAO{
 	 * Create the application.
 	 */
 	public Login() {
+		bDAO = new BaseDAO() {
+		};
 		initialize();
 	}
 
@@ -79,24 +82,30 @@ public class Login extends BaseDAO{
 		//��½��ť���¼�
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String pswd=new String(passwordField.getPassword());
-				int identity=queryForLogin(Integer.parseInt(textField_1.getText()), pswd);
+				String pswd = new String(passwordField.getPassword());
+				int identity = bDAO.queryForLogin(Integer.parseInt(textField_1.getText()), pswd);
 				switch(identity) {
-				case 0:{
+				case 0:
 					Student student=new Student();
 					student.setID(Integer.parseInt(textField_1.getText()));
-					new studentView(student,new StudentDAO());break;
-					}
-				case 1:{
+					frame.dispose();
+					studentView.main(student,new StudentDAO());
+					break;
+				case 1:
 					Teacher teacher=new Teacher();
 					teacher.setID(Integer.parseInt(textField_1.getText()));
-					new normalTeacherView(teacher,new TeacherDAO());break;
-				}
-				case 2:{
+					frame.dispose();
+					normalTeacherView.main(teacher,new TeacherDAO());
+					break;
+				case 2:
 					AdminTeacher adminTeacher=new AdminTeacher();
 					adminTeacher.setID(Integer.parseInt(textField_1.getText()));
-					new JwTecherView(adminTeacher,new AdminDAO());break;
-				}
+					frame.dispose();
+					JwTecherView.main(adminTeacher,new AdminDAO());
+					break;
+				case -1:
+					JOptionPane.showMessageDialog(null, "用户名或密码错误");
+					break;
 				}
 			}
 		});

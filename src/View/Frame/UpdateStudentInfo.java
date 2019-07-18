@@ -1,4 +1,4 @@
-package View.JFrame;
+package View.Frame;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -93,19 +93,19 @@ public class UpdateStudentInfo {
 		label_7.setBounds(77, 233, 72, 18);
 		frame.getContentPane().add(label_7);
 		
-		textField = new JTextField();         //ѧ��
+		textField = new JTextField();         //学号
 		textField.setBounds(198, 10, 86, 24);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		this.id=textField.getText();
 		
-		textField_1 = new JTextField();      //����
+		textField_1 = new JTextField();      //姓名
 		textField_1.setBounds(198, 41, 86, 24);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		this.name=textField_1.getText();
 		
-		JRadioButton radioButton = new JRadioButton("\u7537");      //�Ա�
+		JRadioButton radioButton = new JRadioButton("\u7537");      //性别
 		radioButton.setBounds(193, 71, 43, 27);
 		frame.getContentPane().add(radioButton);
 		if(radioButton.isSelected()){
@@ -123,7 +123,7 @@ public class UpdateStudentInfo {
 		gender.add(radioButton_1);
 		gender.add(radioButton); 
 		
-		JComboBox comboBox = new JComboBox();            //���
+		JComboBox comboBox = new JComboBox();            //年纪
 		comboBox.setBounds(198, 103, 86, 24);
 		frame.getContentPane().add(comboBox);
 		for(int i=15;i<21;i++) {
@@ -139,31 +139,31 @@ public class UpdateStudentInfo {
 		case 5:this.grade ="20";break;
 		}
 		
-		textField_2 = new JTextField();            //רҵ
+		textField_2 = new JTextField();            //专业
 		textField_2.setBounds(198, 137, 86, 24);
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		this.major=textField_2.getText();
 		
-		textField_3 = new JTextField();           //����
+		textField_3 = new JTextField();           //籍贯
 		textField_3.setBounds(198, 168, 86, 24);
 		frame.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		this.hometown=textField_3.getText();
 		
-		textField_4 = new JTextField();           //�绰
+		textField_4 = new JTextField();           //电话
 		textField_4.setBounds(198, 199, 86, 24);
 		frame.getContentPane().add(textField_4);
 		textField_4.setColumns(10);
 		this.tel=textField_4.getText();
 		
-		textField_5 = new JTextField();          //����
+		textField_5 = new JTextField();          //邮箱
 		textField_5.setBounds(198, 230, 86, 24);
 		frame.getContentPane().add(textField_5);
 		textField_5.setColumns(10);
 		this.email=textField_5.getText();
 		
-		JButton button = new JButton("\u786E\u8BA4");     //ȷ��
+		JButton button = new JButton("\u786E\u8BA4");     //确认
 		button.setBounds(123, 265, 113, 27);
 		frame.getContentPane().add(button);
 		button.addActionListener(new ActionListener() {
@@ -177,3 +177,4 @@ public class UpdateStudentInfo {
 		return studentInfo;
 	}
 }
+

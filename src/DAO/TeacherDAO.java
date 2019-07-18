@@ -30,7 +30,7 @@ public class TeacherDAO extends BaseDAO{
 		// 修改密码
 		boolean result = false;
 		try {
-			String sql = "update User set userPassword=? where userID=?";
+			String sql = "update studentmanagementdemo.User set userPassword=? where userID=?";
 			Object[] param = { pswd, teacher.getID() };
 			int Rowcount = db.executeUpdate(sql, param);
 			if (Rowcount == 1) {
@@ -45,7 +45,7 @@ public class TeacherDAO extends BaseDAO{
 	public boolean addCourse(Teacher teacher, int cid, String cname) {
 		boolean result = false;
 		try {
-			String sql = "SELECT * FROM TeacherCourse WHERE CID=?";
+			String sql = "SELECT * FROM studentmanagementdemo.TeacherCourse WHERE CID=?";
 			Object[] check = { cid };
 			rs = db.executeQuery(sql, check);
 			if(rs != null) {	//如果该课程已经存在，则无法再添加该课程
@@ -57,7 +57,7 @@ public class TeacherDAO extends BaseDAO{
 			}
 			
 			// add
-			sql = "INSERT INTO TeacherCourse(TID,CID,Cname,Ccapacity,Cterm) VALUES (?,?,?,30,2019)";
+			sql = "INSERT INTO studentmanagementdemo.TeacherCourse(TID,CID,Cname,Ccapacity,Cterm) VALUES (?,?,?,30,2019)";
 			Object[] param = { teacher.getID(), cid, cname };
 			int rowCount = db.executeUpdate(sql, param);
 			if (rowCount == 1) {
@@ -78,7 +78,7 @@ public class TeacherDAO extends BaseDAO{
 		
 		int i = 0;
 		ArrayList<TeacherCourse> TCs = new ArrayList<TeacherCourse>();
-		String sql = "SELECT * FROM TeacherCourse WHERE Tid=?";
+		String sql = "SELECT * FROM studentmanagementdemo.TeacherCourse WHERE Tid=?";
 		Object[] param = { teacher.getID() };
 			
 		rs = db.executeQuery(sql, param);
@@ -107,7 +107,7 @@ public class TeacherDAO extends BaseDAO{
 	public boolean addGrade(Teacher teacher, int cid, Student student, String score, String cname) {
 		boolean result = false;
 		try {
-			String sql = "SELECT Cname FROM StudentCourse WHERE CID=? and SID=?";
+			String sql = "SELECT Cname FROM studentmanagementdemo.StudentCourse WHERE CID=? and SID=?";
 			Object[] checkScore = { cid, student.getID() };
 			rs = db.executeQuery(sql, checkScore);
 			if(rs != null) {	//如果该学生的成绩已经存在，则无法再添加成绩
@@ -117,7 +117,7 @@ public class TeacherDAO extends BaseDAO{
 				return result;
 			}
 			
-			sql = "SELECT Cname FROM TeacherCourse WHERE CID=? and TID=?";
+			sql = "SELECT Cname FROM studentmanagementdemo.TeacherCourse WHERE CID=? and TID=?";
 			Object[] checkCourse = { cid,teacher.getID() };
 			rs = db.executeQuery(sql, checkCourse);
 			if(rs == null) {
@@ -128,7 +128,7 @@ public class TeacherDAO extends BaseDAO{
 			}
 			
 			// add
-			sql = "INSERT INTO StudentCourse(SID,CID,Cname,Cscore) VALUES (?,?,?,?)";
+			sql = "INSERT INTO studentmanagementdemo.StudentCourse(SID,CID,Cname,Cscore) VALUES (?,?,?,?)";
 			Object[] param = { student.getID(), cid, rs.getString("Cname"), score };
 			int rowCount = db.executeUpdate(sql, param);
 			if (rowCount == 1) {
@@ -149,7 +149,7 @@ public class TeacherDAO extends BaseDAO{
 	public boolean updateGrade(Teacher teacher, int cid, Student student, String cname, String score) {
 		boolean result = false;
 		try {
-			String sql = "SELECT * FROM StudentCourse WHERE CID=? and SID=?";
+			String sql = "SELECT * FROM studentmanagementdemo.StudentCourse WHERE CID=? and SID=?";
 			Object[] check = { cid, student.getID() };
 			rs = db.executeQuery(sql, check);
 			if(rs == null) {	//如果该学生的成绩不存在，则无法修改成绩
@@ -160,7 +160,7 @@ public class TeacherDAO extends BaseDAO{
 			}
 			
 			// add
-			sql = "UPDATE StudentCourse SET Cscore=? WHERE SID=? AND CID=?)";
+			sql = "UPDATE studentmanagementdemo.StudentCourse SET Cscore=? WHERE SID=? AND CID=?)";
 			Object[] param = { score, student.getID(), cid };
 			int rowCount = db.executeUpdate(sql, param);
 			if (rowCount == 1) {
@@ -179,7 +179,7 @@ public class TeacherDAO extends BaseDAO{
 	public boolean deleteGrade(Teacher teacher, int cid, Student student) {
 		boolean result = false;
 		try {
-			String sql = "SELECT * FROM StudentCourse WHERE CID=? and SID=?";
+			String sql = "SELECT * FROM studentmanagementdemo.StudentCourse WHERE CID=? and SID=?";
 			Object[] check = { cid, student.getID() };
 			rs = db.executeQuery(sql, check);
 			if(rs == null) {	//如果该学生的成绩不存在，则无法删除
@@ -187,7 +187,7 @@ public class TeacherDAO extends BaseDAO{
 			}
 			
 			// add
-			sql = "UPDATE StudentCourse SET Cscore=0 WHERE SID=? AND CID=?)";
+			sql = "UPDATE studentmanagementdemo.StudentCourse SET Cscore=0 WHERE SID=? AND CID=?)";
 			Object[] param = { student.getID(), cid };
 			int rowCount = db.executeUpdate(sql, param);
 			if (rowCount == 1) {
@@ -209,7 +209,7 @@ public class TeacherDAO extends BaseDAO{
 		
 		int i = 0;
 		ArrayList<StudentCourse> TCs = new ArrayList<StudentCourse>();
-		String sql = "SELECT * FROM TeacherCourse WHERE Tid=?";
+		String sql = "SELECT * FROM studentmanagementdemo.TeacherCourse WHERE Tid=?";
 		Object[] param = { teacher.getID() };
 			
 		rs = db.executeQuery(sql, param);

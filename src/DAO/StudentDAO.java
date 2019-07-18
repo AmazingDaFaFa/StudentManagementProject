@@ -32,7 +32,7 @@ public class StudentDAO extends BaseDAO {
 				return result;
 			}
 			// update
-			String sql = "update student set Ssex=?,Sgrade=?,Smajor=?,Shometown=?,Stel=?,Semail=? where Sname=? and Sid=?";
+			String sql = "update studentmanagementdemo.student set Ssex=?,Sgrade=?,Smajor=?,Shometown=?,Stel=?,Semail=? where Sname=? and Sid=?";
 			Object[] param = { stu.getSex(), stu.getGrade(), stu.getMajor(), stu.getHometown(), stu.getEmail(),
 					stu.getTel(), stu.getName(), stu.getID() };
 			int rowCount = db.executeUpdate(sql, param);
@@ -53,7 +53,7 @@ public class StudentDAO extends BaseDAO {
 		if (stu == null) {
 			return result;
 		}
-		String sql = "delete from student where Sname=? and SID=?";
+		String sql = "delete from studentmanagementdemo.student where Sname=? and SID=?";
 		Object[] param = { stu.getName(), stu.getID() };
 		int rowCount = db.executeUpdate(sql, param);
 		if (rowCount == 1) {
@@ -75,7 +75,7 @@ public class StudentDAO extends BaseDAO {
 				return result;
 			}
 			// insert
-			String sql = "insert into student(SID,Sname,Ssex,Sgrade,Smajor,Shometown,Stel,Semail) values(?,?,?,?,?,?,?,?)";
+			String sql = "insert into studentmanagementdemo.student(SID,Sname,Ssex,Sgrade,Smajor,Shometown,Stel,Semail) values(?,?,?,?,?,?,?,?)";
 			Object[] param = { stu.getID(), stu.getName(), stu.getSex(), stu.getGrade(), stu.getMajor(),
 					stu.getHometown(), stu.getTel(), stu.getEmail() };
 			if (db.executeUpdate(sql, param) == 1) {
@@ -97,7 +97,7 @@ public class StudentDAO extends BaseDAO {
 		}
 		ArrayList<Student> stus = new ArrayList<Student>();
 		int i = 0;
-		String sql = "select * from student where name like ?";
+		String sql = "select * from studentmanagementdemo.student where name like ?";
 		String[] param = { "%" + name + "%" };
 		rs = db.executeQuery(sql, param);
 		try {
@@ -129,7 +129,7 @@ public class StudentDAO extends BaseDAO {
 		ArrayList<Student> stus = new ArrayList<Student>();
 		int i = 0;
 		int beginNum = (pageNum - 1) * showNum;
-		String sql = "select * from student limit ?,?";
+		String sql = "select * from studentmanagementdemo.student limit ?,?";
 		Integer[] param = { beginNum, showNum };
 		rs = db.executeQuery(sql, param);
 		try {
@@ -202,7 +202,7 @@ public class StudentDAO extends BaseDAO {
 		if (sno == 0) {
 			return result;
 		}
-		String checkSql = "select * from student where sno=?";
+		String checkSql = "select * from studentmanagementdemo.student where sno=?";
 		Object[] checkParam = { sno };
 		rs = db.executeQuery(checkSql, checkParam);
 		if (rs.next()) {
