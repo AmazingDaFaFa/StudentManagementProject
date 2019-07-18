@@ -26,15 +26,15 @@ public abstract class BaseDAO {
 		// buildAbilityDAO();
 	}
 
-	// protected abstract void buildAbilityDAO();
+	// protected abstract void buildAbilityDAO();3
 
-	public int queryForLogin(String username, String password) {
+	public int queryForLogin(int userID, String password) {
 		int result = -1;
-		if (username.length() == 0 || password.length() == 0) {
+		if (password.length() == 0) {
 			return result;
 		}
-		String sql = "select usertype from User where Username=? and Userpassword=?";
-		String[] param = { username, password };
+		String sql = "select usertype from User where UserID=? and Userpassword=?";
+		Object[] param = { userID, password };
 		rs = db.executeQuery(sql, param);
 		try {
 			if (rs.next()) {

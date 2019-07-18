@@ -45,7 +45,7 @@ public class AdminDAO extends BaseDAO {
 			String sql = "SELECT * FROM TeacherCourse WHERE TID=? and CID=?";
 			Object[] check = { teacher.getID(), cid };
 			rs = db.executeQuery(sql, check);
-			if (rs != null) { // 如果该学生的成绩已经存在，则无法再添加成绩
+			if (rs != null) { // 
 				//add ERROR to .Log
 				String logContent = "ADD RECORD ERROR to TABLE:TeacherCourse";
 				myLog.addLog(MyLog.TYPE.ERROR, logContent);
@@ -169,6 +169,8 @@ public class AdminDAO extends BaseDAO {
 		// 根据this.id查询SC表，返回保存了所有课程CID、课程名称Cname、成绩信息Cscore的String[][];
 		String[][] result = null;
 		if (student == null) {
+			String logContent = "QUERY RECORD ERROR to TABLE:StudentCourse";
+			myLog.addLog(MyLog.TYPE.ERROR, logContent);
 			return result; // if student don't exist,return null
 		}
 		ArrayList<StudentCourse> stus = new ArrayList<StudentCourse>();
@@ -194,12 +196,39 @@ public class AdminDAO extends BaseDAO {
 		}
 		return result;
 	}
+	
+	public String[][] queryScore(int cid) {
+		String[][] result = null;
+		ArrayList<StudentCourse> stus = new ArrayList<StudentCourse>();
+		int i = 0;
+		String sql = "select * from StudentCourse where CID=?";
+		Object[] param = { cid };
+		rs = db.executeQuery(sql, param);
+		try {
+			while (rs.next()) {
+				buildList_SC(rs, stus, i);
+				i++;
+			}
+			if (stus.size() > 0) {
+				result = new String[stus.size()][fieldNum];
+				for (int j = 0; j < stus.size(); j++) {
+					buildResult_SC(result, stus, j);
+				}
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} finally {
+			destroy();
+		}
+		return result;
+	}
 
 	// 将rs记录添加到list中
 	private void buildList(ResultSet rs, ArrayList<TeacherCourse> list, int i) throws SQLException {
 		TeacherCourse tc = new TeacherCourse();
 		tc.setTid(rs.getInt("TID"));
 		tc.setCid(rs.getInt("CID"));
+		tc.setCname(rs.getString("Cname"));
 		list.add(tc);
 	}
 
