@@ -1,11 +1,8 @@
 package DAO;
 
-import java.awt.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.mysql.cj.result.Row;
 
 import Model.Student;
 import Model.StudentCourse;

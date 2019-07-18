@@ -26,6 +26,21 @@ public class TeacherDAO extends BaseDAO{
 		return td;
 	}
 	
+	public boolean updatePswd(Teacher teacher, String pswd) {
+		// 修改密码
+		boolean result = false;
+		try {
+			String sql = "update User set userPassword=? where userID=?";
+			Object[] param = { pswd, teacher.getID() };
+			int Rowcount = db.executeUpdate(sql, param);
+			if (Rowcount == 1) {
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	public boolean addCourse(Teacher teacher, int cid, String cname) {
 		boolean result = false;
@@ -34,11 +49,15 @@ public class TeacherDAO extends BaseDAO{
 			Object[] check = { cid };
 			rs = db.executeQuery(sql, check);
 			if(rs != null) {	//如果该课程已经存在，则无法再添加该课程
+				//add to .log
+				String logContent = "Teacher: \'" + teacher.getName() + "\' ADD RECORD ERROR: \'" + teacher.getName() + 
+						"-" + cid + "-" + cname + "\' to TABLE:TeacherCourse";
+				myLog.addLog(MyLog.TYPE.ERROR, logContent);
 				return result;
 			}
 			
 			// add
-			sql = "INSERT INTO TeacherCourse(TID,CID,Cname,Ccapacity,Cterm) VALUES (?,?,?,30,1)";
+			sql = "INSERT INTO TeacherCourse(TID,CID,Cname,Ccapacity,Cterm) VALUES (?,?,?,30,2019)";
 			Object[] param = { teacher.getID(), cid, cname };
 			int rowCount = db.executeUpdate(sql, param);
 			if (rowCount == 1) {
@@ -51,15 +70,12 @@ public class TeacherDAO extends BaseDAO{
 		String logContent = "Teacher: \'" + teacher.getName() + "\' ADD RECORD: \'" + teacher.getName() + 
 				"-" + cid + "-" + cname + "\' to TABLE:TeacherCourse";
 		myLog.addLog(MyLog.TYPE.CREATE, logContent);
-		
 		return result;
 	}
 	
 	public String[][] queryCourse(Teacher teacher) {
 		String[][] result = null;
-		if (teacher.getName().length() < 0) {
-			return result;
-		}
+		
 		int i = 0;
 		ArrayList<TeacherCourse> TCs = new ArrayList<TeacherCourse>();
 		String sql = "SELECT * FROM TeacherCourse WHERE Tid=?";
@@ -91,20 +107,35 @@ public class TeacherDAO extends BaseDAO{
 	public boolean addGrade(Teacher teacher, int cid, Student student, String score, String cname) {
 		boolean result = false;
 		try {
-			String sql = "SELECT * FROM StudentCourse WHERE CID=? and SID=?";
-			Object[] check = { cid, student.getID() };
-			rs = db.executeQuery(sql, check);
+			String sql = "SELECT Cname FROM StudentCourse WHERE CID=? and SID=?";
+			Object[] checkScore = { cid, student.getID() };
+			rs = db.executeQuery(sql, checkScore);
 			if(rs != null) {	//如果该学生的成绩已经存在，则无法再添加成绩
+				//add ERROR to .Log
+				String logContent = "Teacher: \'" + teacher.getName() + "\' ADD RECORD ERROR to TABLE:StudentCourse";
+				myLog.addLog(MyLog.TYPE.ERROR, logContent);
+				return result;
+			}
+			
+			sql = "SELECT Cname FROM TeacherCourse WHERE CID=? and TID=?";
+			Object[] checkCourse = { cid,teacher.getID() };
+			rs = db.executeQuery(sql, checkCourse);
+			if(rs == null) {
+				//add ERROR to .Log
+				String logContent = "Teacher: \'" + teacher.getName() + "\' ADD RECORD ERROR to TABLE:StudentCourse";
+				myLog.addLog(MyLog.TYPE.ERROR, logContent);
 				return result;
 			}
 			
 			// add
 			sql = "INSERT INTO StudentCourse(SID,CID,Cname,Cscore) VALUES (?,?,?,?)";
-			Object[] param = { student.getID(), cid, cname, score };
+			Object[] param = { student.getID(), cid, rs.getString("Cname"), score };
 			int rowCount = db.executeUpdate(sql, param);
 			if (rowCount == 1) {
 				result = true;
 			}
+		} catch(Exception e){
+			
 		} finally {
 			destroy();
 		}
@@ -117,12 +148,14 @@ public class TeacherDAO extends BaseDAO{
 	
 	public boolean updateGrade(Teacher teacher, int cid, Student student, String cname, String score) {
 		boolean result = false;
-		
 		try {
 			String sql = "SELECT * FROM StudentCourse WHERE CID=? and SID=?";
 			Object[] check = { cid, student.getID() };
 			rs = db.executeQuery(sql, check);
 			if(rs == null) {	//如果该学生的成绩不存在，则无法修改成绩
+				//add ERROR to .Log
+				String logContent = "Teacher: \'" + teacher.getName() + "\' UPDATE RECORD ERROR to TABLE:TeacherCourse";
+				myLog.addLog(MyLog.TYPE.ERROR, logContent);
 				return result;
 			}
 			
@@ -173,9 +206,7 @@ public class TeacherDAO extends BaseDAO{
 	
 	public String[][] queryGrade(Teacher teacher, int cid) {
 		String[][] result = null;
-		if (teacher.getName().length() < 0) {
-			return result;
-		}
+		
 		int i = 0;
 		ArrayList<StudentCourse> TCs = new ArrayList<StudentCourse>();
 		String sql = "SELECT * FROM TeacherCourse WHERE Tid=?";

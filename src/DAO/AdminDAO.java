@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import LogWriting.MyLog;
+import Model.AdminTeacher;
 import Model.Student;
 import Model.StudentCourse;
 import Model.Teacher;
@@ -13,8 +14,6 @@ import Model.TeacherCourse;
 public class AdminDAO extends BaseDAO {
 	private static AdminDAO ad = null;
 	private final int fieldNum = 9;
-	private final int showNum = 15;
-
 	private static MyLog myLog = new MyLog("AdminTeacherLog.log");
 
 	public static synchronized AdminDAO getInstance() {
@@ -22,6 +21,22 @@ public class AdminDAO extends BaseDAO {
 			ad = new AdminDAO();
 		}
 		return ad;
+	}
+	
+	public boolean updatePswd(AdminTeacher admin, String pswd) {
+		// 修改密码
+		boolean result = false;
+		try {
+			String sql = "update User set userPassword=? where userID=?";
+			Object[] param = { pswd, admin.getID() };
+			int Rowcount = db.executeUpdate(sql, param);
+			if (Rowcount == 1) {
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public boolean addCourse(Teacher teacher, int cid, String Cname) {
@@ -31,6 +46,9 @@ public class AdminDAO extends BaseDAO {
 			Object[] check = { teacher.getID(), cid };
 			rs = db.executeQuery(sql, check);
 			if (rs != null) { // 如果该学生的成绩已经存在，则无法再添加成绩
+				//add ERROR to .Log
+				String logContent = "ADD RECORD ERROR to TABLE:TeacherCourse";
+				myLog.addLog(MyLog.TYPE.ERROR, logContent);
 				return result;
 			}
 
@@ -59,6 +77,9 @@ public class AdminDAO extends BaseDAO {
 			Object[] check = { teacher.getID(), cid };
 			rs = db.executeQuery(sql, check);
 			if (rs == null) { // 如果该课程不存在，则无法修改
+				//add ERROR to .Log
+				String logContent = "UPDATE RECORD ERROR to TABLE:TeacherCourse";
+				myLog.addLog(MyLog.TYPE.ERROR, logContent);
 				return result;
 			}
 
@@ -82,9 +103,7 @@ public class AdminDAO extends BaseDAO {
 
 	public String[][] queryCourse(Teacher teacher) {
 		String[][] result = null;
-		if (teacher.getName().length() < 0) {
-			return result;
-		}
+		
 		int i = 0;
 		ArrayList<TeacherCourse> TCs = new ArrayList<TeacherCourse>();
 		String sql = "SELECT * FROM TeacherCourse WHERE Tid=?";
@@ -116,6 +135,9 @@ public class AdminDAO extends BaseDAO {
 	public boolean updateStudent(Student student) {
 		boolean result = false;
 		if (student == null) {
+			//add ERROR to .Log
+			String logContent = "UPDATE RECORD ERROR to TABLE:Student";
+			myLog.addLog(MyLog.TYPE.ERROR, logContent);
 			return result;
 		}
 		try {
@@ -153,35 +175,6 @@ public class AdminDAO extends BaseDAO {
 		int i = 0;
 		String sql = "select * from StudentCourse where SID=?";
 		Object[] param = { student.getID() };
-		rs = db.executeQuery(sql, param);
-		try {
-			while (rs.next()) {
-				buildList_SC(rs, stus, i);
-				i++;
-			}
-			if (stus.size() > 0) {
-				result = new String[stus.size()][fieldNum];
-				for (int j = 0; j < stus.size(); j++) {
-					buildResult_SC(result, stus, j);
-				}
-			}
-		} catch (SQLException se) {
-			se.printStackTrace();
-		} finally {
-			destroy();
-		}
-		return result;
-	}
-
-	public String[][] queryScore(Student student, int cid) {
-		String[][] result = null;
-		if (student == null) {
-			return result; // if student don't exist,return null
-		}
-		ArrayList<StudentCourse> stus = new ArrayList<StudentCourse>();
-		int i = 0;
-		String sql = "select * from StudentCourse where SID=? and CID=?";
-		Object[] param = { student.getID(),cid };
 		rs = db.executeQuery(sql, param);
 		try {
 			while (rs.next()) {
