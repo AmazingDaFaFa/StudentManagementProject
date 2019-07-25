@@ -1,0 +1,225 @@
+****************
+2019-07-19 13:30:33
+# ERROR
+ADD RECORD ERROR to TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:33:36
+# CREATE
+ADD RECORD: '10005-900-C1' to TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:33:46
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:33:46
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:33:46
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:33:46
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:34:47
+# CREATE
+ADD RECORD: '10005-910-C11' to TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:34:56
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:34:56
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:34:56
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:34:56
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:34:56
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:35:43
+# UPDATE
+UPDATE RECORD: '10005-910-C12' to TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:36:59
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:36:59
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:36:59
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:36:59
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:36:59
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:37:18
+# UPDATE
+UPDATE RECORD: '10005-910-C12' to TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:38:48
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:38:48
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:38:48
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:38:48
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:38:48
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:39:38
+# UPDATE
+UPDATE RECORD: '10005-910-C11' to TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:39:45
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:39:45
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:39:45
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:39:45
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 13:39:45
+# QUERY
+Admin: QUERY COURSE of '10005' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:02
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:02
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:02
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:02
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:22
+# UPDATE
+UPDATE RECORD: '10002-907-C16' to TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:32
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:32
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:32
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:32
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:16:58
+# CREATE
+ADD RECORD: '10002-906-C8' to TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:17:05
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:17:05
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:17:05
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:17:05
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
+****************
+2019-07-19 14:17:05
+# QUERY
+Admin: QUERY COURSE of '10002' on TABLE:TeacherCourse
+****************
